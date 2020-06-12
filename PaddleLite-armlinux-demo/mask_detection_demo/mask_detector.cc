@@ -65,13 +65,13 @@ FaceDetector::FaceDetector(const std::string &modelDir,
                            const std::vector<float> &inputMean,
                            const std::vector<float> &inputStd,
                            float scoreThreshold)
-    : inputScale_(inputScale), inputMean_(inputMean), inputStd_(inputStd),
+    : inputScale_(inputScale),
+      inputMean_(inputMean),
+      inputStd_(inputStd),
       scoreThreshold_(scoreThreshold) {
   MobileConfig config;
   config.set_model_from_file(modelDir);
-  predictor_ =
-      CreatePaddlePredictor<MobileConfig>(
-          config);
+  predictor_ = CreatePaddlePredictor<MobileConfig>(config);
 }
 
 void FaceDetector::Preprocess(const cv::Mat &rgbaImage) {
@@ -122,13 +122,9 @@ void FaceDetector::Postprocess(const cv::Mat &rgbaImage,
   }
 }
 
-void FaceDetector::Predict(const cv::Mat &rgbaImage, std::vector<Face> *faces,
-                           double *preprocessTime, double *predictTime,
-                           double *postprocessTime) {
+void FaceDetector::Predict(const cv::Mat &rgbaImage, std::vector<Face> *faces) {
   Preprocess(rgbaImage);
-
   predictor_->Run();
-
   Postprocess(rgbaImage, faces);
 }
 
@@ -140,10 +136,8 @@ MaskClassifier::MaskClassifier(const std::string &modelDir,
     : inputWidth_(inputWidth), inputHeight_(inputHeight), inputMean_(inputMean),
       inputStd_(inputStd) {
   MobileConfig config;
-  config.set_model_from_file(modelDir + "/model.nb");
-  predictor_ =
-      CreatePaddlePredictor<MobileConfig>(
-          config);
+  config.set_model_from_file(modelDir);
+  predictor_ = CreatePaddlePredictor<MobileConfig>(config);
 }
 
 void MaskClassifier::Preprocess(const cv::Mat &rgbaImage,
@@ -210,12 +204,8 @@ void MaskClassifier::Postprocess(std::vector<Face> *faces) {
   }
 }
 
-void MaskClassifier::Predict(const cv::Mat &rgbaImage, std::vector<Face> *faces,
-                             double *preprocessTime, double *predictTime,
-                             double *postprocessTime) {
+void MaskClassifier::Predict(const cv::Mat &rgbaImage, std::vector<Face> *faces) {
   Preprocess(rgbaImage, *faces);
-
   predictor_->Run();
-
   Postprocess(faces);
 }

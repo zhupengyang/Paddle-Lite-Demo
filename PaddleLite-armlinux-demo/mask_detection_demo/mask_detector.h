@@ -37,15 +37,13 @@ struct Face {
 
 class FaceDetector {
 public:
-  explicit FaceDetector(const std::string &modelDir, const int cpuThreadNum,
-                        const std::string &cpuPowerMode, float inputScale,
+  explicit FaceDetector(const std::string &modelDir, 
+                        float inputScale,
                         const std::vector<float> &inputMean,
                         const std::vector<float> &inputStd,
                         float scoreThreshold);
 
-  void Predict(const cv::Mat &rgbaImage, std::vector<Face> *faces,
-               double *preprocessTime, double *predictTime,
-               double *postprocessTime);
+  void Predict(const cv::Mat &rgbaImage, std::vector<Face> *faces);
 
 private:
   void Preprocess(const cv::Mat &rgbaImage);
@@ -62,14 +60,13 @@ private:
 
 class MaskClassifier {
 public:
-  explicit MaskClassifier(const std::string &modelDir, const int cpuThreadNum,
-                          const std::string &cpuPowerMode, int inputWidth,
-                          int inputHeight, const std::vector<float> &inputMean,
+  explicit MaskClassifier(const std::string &modelDir,
+                          int inputWidth,
+                          int inputHeight,
+                          const std::vector<float> &inputMean,
                           const std::vector<float> &inputStd);
 
-  void Predict(const cv::Mat &rgbImage, std::vector<Face> *faces,
-               double *preprocessTime, double *predictTime,
-               double *postprocessTime);
+  void Predict(const cv::Mat &rgbImage, std::vector<Face> *faces);
 
 private:
   void Preprocess(const cv::Mat &rgbaImage, const std::vector<Face> &faces);
