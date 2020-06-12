@@ -29,7 +29,7 @@ void VisualizeResult(const cv::Mat& img,
     // Configure color and text size
     cv::Scalar roi_color;
     std::string text;
-    if (results[i].class_id == 1) {
+    if (results[i].classid == 1) {
       text = "MASK:  ";
       roi_color = cv::Scalar(0, 255, 0);
     } else {

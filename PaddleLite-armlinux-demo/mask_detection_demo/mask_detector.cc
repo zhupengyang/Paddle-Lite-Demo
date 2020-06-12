@@ -75,7 +75,6 @@ FaceDetector::FaceDetector(const std::string &modelDir,
 }
 
 void FaceDetector::Preprocess(const cv::Mat &rgbaImage) {
-  auto t = GetCurrentTime();
   cv::Mat resizedRGBAImage;
   cv::resize(rgbaImage, resizedRGBAImage, cv::Size(), inputScale_, inputScale_,
              cv::INTER_CUBIC);
