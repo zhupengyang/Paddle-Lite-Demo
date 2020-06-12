@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # configure
 TARGET_ARCH_ABI=armv8 # for RK3399, set to default arch abi

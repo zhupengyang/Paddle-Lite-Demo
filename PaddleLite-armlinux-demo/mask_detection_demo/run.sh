@@ -17,4 +17,4 @@ cmake -DPADDLE_LITE_DIR=${PADDLE_LITE_DIR} -DTARGET_ARCH_ABI=${TARGET_ARCH_ABI} 
 make
 
 #run
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${PADDLE_LITE_DIR}/libs/${TARGET_ARCH_ABI} ./image_classification_demo ../models/mobilenet_v1_for_cpu/model.nb ../labels/synset_words.txt ../images/tabby_cat.jpg ./result.jpg
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${PADDLE_LITE_DIR}/libs/${TARGET_ARCH_ABI} ./mask_detection_demo ../models/pyramidbox_lite_for_cpu/model.nb ../models/mask_detector_for_cpu/model.nb ../images/test_img.jpg
