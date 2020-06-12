@@ -56,10 +56,10 @@ void VisualizeResult(const cv::Mat& img,
     origin.y = roi.y;
 
     // Configure text background
-    cv::Rect text_back = cv::Rect(results[i].rect[0],
-    results[i].rect[2] - text_size.height,
-    text_size.width,
-    text_size.height);
+    cv::Rect text_back = cv::Rect(roi.x,
+                                  roi.y,
+                                  text_size.width,
+                                  text_size.height);
 
     // Draw roi object, text, and background
     *vis_img = img;
@@ -114,9 +114,9 @@ int main(int argc, char* argv[]) {
   // Prediction result
   std::vector<Face> results;
   // Stage1: Face detection
-  detector.Predict(img, &results, det_shrink);
+  detector.Predict(img, &results);
   // Stage2: Mask wearing classification
-  classifier.Predict(&results);
+  classifier.Predict(img, &results);
 
   // Visualization result
   cv::Mat vis_img;
